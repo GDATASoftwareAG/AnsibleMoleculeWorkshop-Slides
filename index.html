@@ -26,7 +26,6 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>Ansible: Testing with molecule</section>
-				<section>Ansible: Testing with molecule</section>
 				<section>
 					<section>
 						Who do we work for?
@@ -96,17 +95,28 @@
 					<section>
 						molecule
 					</section>
+					<section>
+						Workshop onboarding <br /><br />
+						<ul>
+							<li>Gitlab</li>
+							<li>Slack</li>
+						</ul>		
+					</section>
 				</section>
 				<section>
-					Lession 1: Initializer and pass a role testing
-					<pre><code data-trim data-noescape>
-						docker run  -v $(pwd):$(pwd) -w $(pwd) --user root quay.io/ansible/molecule:3.0.2 /bin/sh -c "molecule init role --verifier-name testinfra rolename"
-					</code></pre>
-					<pre><code data-trim data-noescape>
-						docker run -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):$(pwd) -w $(pwd)/rolename --user root quay.io/ansible/molecule:3.0.2 /bin/sh -c "pip3 install testinfra; molecule test"
-					</code></pre>
-
-					15 Minutes
+					<section>
+						Lession 1: Initialize a role and pass a test
+						<pre><code data-trim data-noescape>
+							docker run  -v $(pwd):$(pwd) -w $(pwd) --user root quay.io/ansible/molecule:3.0.2 /bin/sh -c "molecule init role --verifier-name testinfra rolename"
+						</code></pre>
+						<pre><code data-trim data-noescape>
+							docker run -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):$(pwd) -w $(pwd)/rolename --user root quay.io/ansible/molecule:3.0.2 /bin/sh -c "pip3 install testinfra; molecule test"
+						</code></pre>
+						5 Minutes
+					</section>
+					<section>
+						<img src="initialized-role.png" />
+					</section>
 				</section>
 			</div>
 		</div>
