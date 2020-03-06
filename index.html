@@ -74,6 +74,39 @@
 							<li>configuration drift</li>
 						</ul>					
 					</section>
+					<section>
+						<ul>
+							<li>reliability</li>
+							<li>infrastructure as code</li>
+							<li>a role as a software unit</li>
+						</ul>					
+					</section>
+					<section>
+						<img src="developers-5ti84m.jpg" />				
+					</section>
+					<section>
+						tests <br /><br />
+						<ul>
+							<li>testing role functionality when creating a role</li>
+							<li>testing role functionality when making changes</li>
+						</ul>			
+					</section>
+				</section>
+				<section>
+					<section>
+						molecule
+					</section>
+				</section>
+				<section>
+					Lession 1: Initializer and pass a role testing
+					<pre><code data-trim data-noescape>
+						docker run  -v $(pwd):$(pwd) -w $(pwd) --user root quay.io/ansible/molecule:3.0.2 /bin/sh -c "molecule init role --verifier-name testinfra rolename"
+					</code></pre>
+					<pre><code data-trim data-noescape>
+						docker run -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):$(pwd) -w $(pwd)/rolename --user root quay.io/ansible/molecule:3.0.2 /bin/sh -c "pip3 install testinfra; molecule test"
+					</code></pre>
+
+					15 Minutes
 				</section>
 			</div>
 		</div>
