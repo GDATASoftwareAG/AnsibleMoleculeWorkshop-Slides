@@ -105,18 +105,139 @@
 				</section>
 				<section>
 					<section>
-						Lession 1: Initialize a role and pass a test
+						<b>Lession 1: Initialize a role and pass a test</b>
 						<pre><code data-trim data-noescape>
-							docker run  -v $(pwd):$(pwd) -w $(pwd) --user root quay.io/ansible/molecule:3.0.2 /bin/sh -c "molecule init role --verifier-name testinfra rolename"
+							molecule init role --verifier-name testinfra rolename
 						</code></pre>
 						<pre><code data-trim data-noescape>
-							docker run -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):$(pwd) -w $(pwd)/rolename --user root quay.io/ansible/molecule:3.0.2 /bin/sh -c "pip3 install testinfra; molecule test"
+							molecule test --all
 						</code></pre>
-						5 Minutes
+						<b>15 Minutes</b>
+					</section>
+					<section>
+						Just by doing that you get <br /><br />
+						<ul>
+							<li>validation</li>
+							<li>linting</li>
+							<li>idempotent check</li>
+						</ul>
 					</section>
 					<section>
 						<img src="initialized-role.png" />
 					</section>
+				</section>
+				<section>
+					<section>
+						testinfra
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+"""Role testing files using testinfra."""
+
+
+def test_hosts_file(host):
+  """Validate /etc/hosts file."""
+  f = host.file("/etc/hosts")
+
+  assert f.exists
+  assert f.user == "root"
+  assert f.group == "root"
+						</code></pre>
+					</section>
+					<section>
+						<ul>
+							<li>runs on provisioned machine</li>
+							<li>check status like file permissions</li>
+							<li>validate software by running commands</li>
+						</ul>		
+					</section>
+				</section>
+				<section>
+					<section>
+						<b>Lession 2: Add a test to an existing role</b>
+						<pre><code data-trim data-noescape>
+							molecule init scenario --verifier-name testinfra my_new_scenario
+						</code></pre>
+						test if the docker-compose flag is working<br />
+						<b>hint</b>: the docker-compose binary should't be there<br />
+						<b>hint</b>: the converge.yml is a real playbook<br />
+						<b>30 Minutes</b>
+					</section>
+
+					<section>
+						<pre><code data-trim data-noescape>
+							"""Role testing files using testinfra."""
+							
+							
+							def test_docker_compose_working(host):
+								cmd = host.run('docker-compose --version')
+							
+								assert cmd.rc != 0
+						</code></pre>
+						<pre><code data-trim data-noescape>
+							roles:
+							- role: geerlingguy.docker
+							  vars:
+								docker_install_compose: false
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<b>Lession 3: Add functionality to a role</b>
+						<pre><code data-trim data-noescape>
+							molecule init scenario --verifier-name testinfra my_new_scenario
+						</code></pre>
+						start a container on the server and test if its working<br />
+						use jwilder/whoami image thats easy to handle<br />
+						<b>30 Minutes</b>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							"""Role testing files using testinfra."""
+							
+							
+							def test_docker_compose_working(host):
+								cmd = host.run('docker-compose --version')
+							
+								assert cmd.rc != 0
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+					advanced molecule functionality
+					</section>
+				</section>
+				<section>
+					Need debug output from you provisioner?
+					<pre><code data-trim data-noescape>
+provisioner:
+  name: ansible
+  log: true
+  options:
+    vvv: true
+					</code></pre>
+				</section>
+				<section>
+					Shameless plugs
+					<div class="grid-container" style="display: grid; align-items: center;">
+						<div class="grid-item" style="grid-column: 1 / span 1;">
+							<img height="500" src="florian-kuckelkorn.png" style="border-radius: 50%; width: 200px; height: 200px;" />
+						</div>
+						<div class="grid-item" style="grid-column: 2 / span 4;">
+							<b>Florian Kuckelkorn</b> <br />
+							florian.kuckelkorn@gdata.de
+						</div>
+						<div class="grid-item" style="grid-column: 1 / span 1;">
+							<img height="500" src="matthias-simonis.jpg" style="border-radius: 50%; width: 200px; height: 200px;" />
+						</div>
+						<div class="grid-item" style="grid-column: 2 / span 4;">
+							<b>Matthias Simonis</b> <br />
+							@wirspielen1 <br />
+							matthias.simonis@gdata.de
+						</div>
+					</div>
 				</section>
 			</div>
 		</div>
