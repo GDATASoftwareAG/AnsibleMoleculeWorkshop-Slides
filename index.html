@@ -25,18 +25,18 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Ansible: Testing with molecule</section>
+				<section><h4>Ansible: Testing with molecule</h4></section>
 				<section>
 					<section>
-						Who do we work for?
+						<h4>Who do we work for?</h4>
 						<img src="Gdata-by-night-small.jpg" />
 					</section>
 					<section>
-						Where do we work?
+						<h4>Where do we work?</h4>
 						<img src="Gdata-by-night-small-where.jpg" />
 					</section>
 					<section>
-						Who we are (shameless plugs at the end)?
+						<h4>Who we are (shameless plugs at the end)?</h4>
 						<div class="grid-container" style="display: grid; align-items: center;">
 							<div class="grid-item" style="grid-column: 1 / span 1;">
 								<img height="500" src="florian-kuckelkorn.png" style="border-radius: 50%; width: 200px; height: 200px;" />
@@ -63,7 +63,7 @@
 				</section>
 				<section>
 					<section>
-						Ansible
+						<h4>Ansible</h4>
 					</section>
 					<section>
 						<ul>
@@ -84,7 +84,7 @@
 						<img src="developers-5ti84m.jpg" />				
 					</section>
 					<section>
-						tests <br /><br />
+						<h4>tests</h4>
 						<ul>
 							<li>testing role functionality when creating a role</li>
 							<li>testing role functionality when making changes</li>
@@ -93,19 +93,20 @@
 				</section>
 				<section>
 					<section>
-						molecule
+						<h4>molecule</h4>
 					</section>
 					<section>
-						Workshop onboarding <br /><br />
+						<h4>Workshop onboarding</h4>
 						<ul>
-							<li>Gitlab</li>
+							<li><a href="https://gitlab.com/devopsgatheringgdata">Gitlab</a></li>
 							<li>Slack</li>
+							<li><a href="https://gitlab.com/devopsgatheringgdata/moleculeworkshopstepsslides">slides</a></li>
 						</ul>		
 					</section>
 				</section>
 				<section>
 					<section>
-						<b>Lession 1: Initialize a role and pass a test</b>
+						<h4>Lession 1: Initialize a role and pass a test</h4>
 						<pre><code data-trim data-noescape>
 							molecule init role --verifier-name testinfra rolename
 						</code></pre>
@@ -115,11 +116,11 @@
 						<b>15 Minutes</b>
 					</section>
 					<section>
-						Just by doing that you get <br /><br />
+						<h4>Just by doing that you get</h4>
 						<ul>
 							<li>validation</li>
 							<li>linting</li>
-							<li>idempotent check</li>
+							<li>idempotency check</li>
 						</ul>
 					</section>
 					<section>
@@ -128,9 +129,10 @@
 				</section>
 				<section>
 					<section>
-						testinfra
+						<h4>testinfra</h4>
 					</section>
 					<section>
+						molecule/tests/some_test.py
 						<pre><code data-trim data-noescape>
 """Role testing files using testinfra."""
 
@@ -154,7 +156,7 @@ def test_hosts_file(host):
 				</section>
 				<section>
 					<section>
-						<b>Lession 2: Add a test to an existing role</b>
+						<h4>Lession 2: Add a test to an existing role</h4>
 						<pre><code data-trim data-noescape>
 							molecule init scenario --verifier-name testinfra my_new_scenario
 						</code></pre>
@@ -165,6 +167,7 @@ def test_hosts_file(host):
 					</section>
 
 					<section>
+						molecule/tests/some_test.py
 						<pre><code data-trim data-noescape>
 							"""Role testing files using testinfra."""
 							
@@ -174,17 +177,60 @@ def test_hosts_file(host):
 							
 								assert cmd.rc != 0
 						</code></pre>
+						molecule/converge.yml
 						<pre><code data-trim data-noescape>
 							roles:
 							- role: geerlingguy.docker
 							  vars:
-								docker_install_compose: false
+							    docker_install_compose: false
 						</code></pre>
 					</section>
 				</section>
 				<section>
 					<section>
-						<b>Lession 3: Add functionality to a role</b>
+						<h4>the key to idempotency: custom facts</h4>
+					</section>
+					<section>
+						files/some_fact.txt
+						<pre><code data-trim data-noescape>
+#!/bin/bash
+
+echo "[ $(docker ps --all --format "{{json .Names}},") ]" | \
+sed "s#, ]# ]#g"
+						</code></pre>
+					</section>
+					<section>
+						tasks/my_task.yml
+						<pre><code data-trim data-noescape>
+- name: "Create custom fact directory"
+  file:
+    path: "/etc/ansible/facts.d"
+    state: "directory"
+
+- name: "Insert custom fact file for docker container"
+  copy:
+    src: files/docker_containers.fact
+    dest: /etc/ansible/facts.d/docker_containers.fact
+    mode: 0755
+
+- name: reload ansible_local
+  setup:
+    filter: ansible_local
+						</code></pre>
+					</section>
+					<section>
+						tasks/my_task.yml
+						<pre><code data-trim data-noescape>
+- name: "Run platform container (custom)"
+  command: docker run --rm -d -p 8080:8000 \
+           --name ptl-whoami jwilder/whoami:latest
+  when: '"ptl-whoami" not in ansible_local.docker_containers'
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4>Lession 3: Add functionality to a role</h4>
 						<pre><code data-trim data-noescape>
 							molecule init scenario --verifier-name testinfra my_new_scenario
 						</code></pre>
@@ -193,6 +239,7 @@ def test_hosts_file(host):
 						<b>30 Minutes</b>
 					</section>
 					<section>
+						molecule/tests/some_test.py
 						<pre><code data-trim data-noescape>
 							"""Role testing files using testinfra."""
 							
@@ -206,11 +253,25 @@ def test_hosts_file(host):
 				</section>
 				<section>
 					<section>
-					advanced molecule functionality
+						<h4>advanced molecule functionality</h4>
+					</section>
+					<section>
+						<h4>dependencies</h4>
+						meta/main.yml
+						<pre><code data-trim data-noescape>
+dependencies:
+  - name: geerlingguy.docker
+						</code></pre>
+						molecule/requirements.yml
+						<pre><code data-trim data-noescape>
+---
+- name: geerlingguy.docker
+						</code></pre>
 					</section>
 				</section>
 				<section>
-					Need debug output from you provisioner?
+					<h4>Need debug output from you provisioner?</h4>
+					molecule/molecule.yml
 					<pre><code data-trim data-noescape>
 provisioner:
   name: ansible
@@ -220,7 +281,7 @@ provisioner:
 					</code></pre>
 				</section>
 				<section>
-					Shameless plugs
+					<h4>Shameless plugs</h4>
 					<div class="grid-container" style="display: grid; align-items: center;">
 						<div class="grid-item" style="grid-column: 1 / span 1;">
 							<img height="500" src="florian-kuckelkorn.png" style="border-radius: 50%; width: 200px; height: 200px;" />
@@ -238,6 +299,11 @@ provisioner:
 							matthias.simonis@gdata.de
 						</div>
 					</div>
+				</section>
+				<section>
+					<h4>Shameless plugs 2</h4>
+					<b>We are hiring!</b>
+					<img src="Gdata-by-night-small.jpg" />
 				</section>
 			</div>
 		</div>
