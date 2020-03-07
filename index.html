@@ -227,6 +227,18 @@ sed "s#, ]# ]#g"
   when: '"ptl-whoami" not in ansible_local.docker_containers'
 						</code></pre>
 					</section>
+					<section>
+						<h4>the easy way out</h4>
+						tasks/my_task.yml
+						<pre><code data-trim data-noescape>
+- name: initialize the swarm
+  shell: docker swarm init \
+         --advertise-addr {{ansible_default_ipv4.address}}
+  when:
+    - "docker_info.stdout.find('Swarm: inactive') != -1"
+    - "not hostvars['DOCKER_SWARM_TOKEN_HOLDER']"
+						</code></pre>
+					</section>
 				</section>
 				<section>
 					<section>
@@ -266,6 +278,27 @@ dependencies:
 						<pre><code data-trim data-noescape>
 ---
 - name: geerlingguy.docker
+						</code></pre>
+					</section>
+					<section>
+						<h4>advanced inventories</h4>
+						molecule/converge.yml
+						<pre><code data-trim data-noescape>
+---
+- name: Converge
+  hosts: manager
+  serial: 1
+  tasks:
+    - name: "Include some_role"
+      include_role:
+      name: "some_role"
+- name: Converge
+  hosts: worker
+  serial: 1
+  tasks:
+    - name: "Include some_role"
+      include_role:
+      name: "some_role"
 						</code></pre>
 					</section>
 				</section>
