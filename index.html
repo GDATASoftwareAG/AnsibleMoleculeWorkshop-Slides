@@ -118,6 +118,7 @@
 						<pre><code data-trim data-noescape>
 							molecule init role --verifier-name testinfra rolename
 						</code></pre>
+						Now add linting and try to get the test to pass
 						<pre><code data-trim data-noescape>
 							molecule test --all
 						</code></pre>
@@ -169,7 +170,8 @@ def test_hosts_file(host):
 							molecule init scenario --verifier-name testinfra my_new_scenario
 						</code></pre>
 						test if the docker-compose flag is working<br />
-						<b>hint</b>: the docker-compose binary should't be there<br />
+						also add linting to the default test<br />
+						<b>hint</b>: running docker-compose should fail<br />
 						<b>hint</b>: the converge.yml is a real playbook<br />
 						<b>30 Minutes</b>
 					</section>
