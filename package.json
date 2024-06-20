@@ -7,6 +7,7 @@
   "main": "dist/reveal.js",
   "module": "dist/reveal.esm.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "test": "gulp test",
     "start": "gulp serve",
@@ -96,5 +97,8 @@
       "no-eq-null": 2,
       "no-unused-expressions": 0
     }
+  },
+  "dependencies": {
+    "reveal-multiplex": "^0.1.0"
   }
 }

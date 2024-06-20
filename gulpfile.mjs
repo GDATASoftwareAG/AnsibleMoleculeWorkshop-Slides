@@ -1,30 +1,30 @@
-const pkg = require('./package.json')
-const path = require('path')
-const glob = require('glob')
-const yargs = require('yargs')
-const colors = require('colors')
-const through = require('through2');
-const qunit = require('node-qunit-puppeteer')
+import pkg from './package.json' with { type: "json" }
+import path from 'path'
+import { glob } from 'glob'
+import yargs from 'yargs';
+import colors from 'colors'
+import through from 'through2';
+import qunit from 'node-qunit-puppeteer'
 
-const { rollup } = require('rollup')
-const terser = require('@rollup/plugin-terser')
-const babel = require('@rollup/plugin-babel').default
-const commonjs = require('@rollup/plugin-commonjs')
-const resolve = require('@rollup/plugin-node-resolve').default
-const sass = require('sass')
+import { rollup } from 'rollup'
+import terser from '@rollup/plugin-terser'
+import babel from '@rollup/plugin-babel'
+import commonjs from '@rollup/plugin-commonjs'
+import resolve from '@rollup/plugin-node-resolve'
+import sass from 'sass'
 
-const gulp = require('gulp')
-const tap = require('gulp-tap')
-const zip = import('gulp-zip')
-const header = require('gulp-header')
-const eslint = require('gulp-eslint')
-const minify = require('gulp-clean-css')
-const connect = require('gulp-connect')
-const autoprefixer = import('gulp-autoprefixer')
+import gulp from 'gulp'
+import tap from 'gulp-tap'
+import zip from 'gulp-zip'
+import header from 'gulp-header'
+import eslint from 'gulp-eslint'
+import minify from 'gulp-clean-css'
+import connect from 'gulp-connect'
+import autoPrefixer from 'gulp-autoprefixer'
 
-const root = yargs.argv.root || '.'
-const port = yargs.argv.port || 8000
-const host = yargs.argv.host || 'localhost'
+const root = yargs.argv?.root || '.'
+const port = yargs.argv?.port || 8000
+const host = yargs.argv?.host || 'localhost'
 
 const banner = `/*!
 * reveal.js ${pkg.version}
@@ -77,7 +77,7 @@ let cache = {};
 gulp.task('js-es5', () => {
     return rollup({
         cache: cache.umd,
-        input: 'js/index.js',
+        input: 'js/reveal.js',
         plugins: [
             resolve(),
             commonjs(),
@@ -100,7 +100,7 @@ gulp.task('js-es5', () => {
 gulp.task('js-es6', () => {
     return rollup({
         cache: cache.esm,
-        input: 'js/index.js',
+        input: 'js/reveal.js',
         plugins: [
             resolve(),
             commonjs(),
@@ -123,12 +123,12 @@ gulp.task('js', gulp.parallel('js-es5', 'js-es6'));
 // built-in plugins
 gulp.task('plugins', () => {
     return Promise.all([
-        { name: 'RevealHighlight', input: './plugin/highlight/plugin.js', output: './plugin/highlight/highlight' },
-        { name: 'RevealMarkdown', input: './plugin/markdown/plugin.js', output: './plugin/markdown/markdown' },
-        { name: 'RevealSearch', input: './plugin/search/plugin.js', output: './plugin/search/search' },
-        { name: 'RevealNotes', input: './plugin/notes/plugin.js', output: './plugin/notes/notes' },
-        { name: 'RevealZoom', input: './plugin/zoom/plugin.js', output: './plugin/zoom/zoom' },
-        { name: 'RevealMath', input: './plugin/math/plugin.js', output: './plugin/math/math' },
+        { name: 'RevealHighlight', input: './plugin/highlight/highlight.js', output: './plugin/highlight/highlight' },
+        { name: 'RevealMarkdown', input: './plugin/markdown/markdown.js', output: './plugin/markdown/markdown' },
+        { name: 'RevealSearch', input: './plugin/search/search.js', output: './plugin/search/search' },
+        { name: 'RevealNotes', input: './plugin/notes/notes.js', output: './plugin/notes/notes' },
+        { name: 'RevealZoom', input: './plugin/zoom-js/zoom.js', output: './plugin/zoom/zoom' },
+        { name: 'RevealMath', input: './plugin/math/math.js', output: './plugin/math/math' },
     ].map(plugin => {
         return rollup({
             cache: cache[plugin.input],
@@ -187,7 +187,7 @@ gulp.task('css-themes', () => gulp.src(['./css/theme/source/*.{sass,scss}'])
 
 gulp.task('css-core', () => gulp.src(['css/reveal.scss'])
     .pipe(compileSass())
-    .pipe(autoprefixer())
+    .pipe(autoPrefixer())
     .pipe(minify({ compatibility: 'ie9' }))
     .pipe(header(banner))
     .pipe(gulp.dest('./dist')))
