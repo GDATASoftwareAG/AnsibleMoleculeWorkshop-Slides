@@ -50,13 +50,13 @@
     "gulp-header": "^2",
     "gulp-tap": "^2",
     "gulp-zip": "^5",
-    "highlight.js": "^11.8.0",
-    "marked": "^5.0.2",
-    "node-qunit-puppeteer": "^2.1.2",
-    "qunit": "^2.19.4",
-    "rollup": "^3.23.0",
-    "sass": "^1.62.1",
-    "yargs": "^17.7.2"
+    "highlight.js": "^11",
+    "marked": "^13",
+    "node-qunit-puppeteer": "^2",
+    "qunit": "^2",
+    "rollup": "^4",
+    "sass": "^1",
+    "yargs": "^17"
   },
   "browserslist": "> 0.5%, IE 11, not dead",
   "eslintConfig": {
