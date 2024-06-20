@@ -34,12 +34,12 @@
     "@babel/core": "^7",
     "@babel/eslint-parser": "^7",
     "@babel/preset-env": "^7",
+    "@dlguswo333/reveal-multiplex": "^0",
     "@rollup/plugin-babel": "^6",
     "@rollup/plugin-commonjs": "^26",
     "@rollup/plugin-node-resolve": "^15",
     "@rollup/plugin-terser": "^0",
     "babel-plugin-transform-html-import-to-string": "^2",
-    "colors": "^1",
     "core-js": "^3",
     "fitty": "^2",
     "glob": "^10",
@@ -49,7 +49,6 @@
     "gulp-connect": "^5",
     "gulp-eslint": "^6",
     "gulp-header": "^2",
-    "gulp-tap": "^2",
     "gulp-zip": "^5",
     "highlight.js": "^11",
     "marked": "^13",
@@ -98,7 +97,9 @@
       "no-unused-expressions": 0
     }
   },
-  "dependencies": {
-    "reveal-multiplex": "^0.1.0"
+  "overrides": {
+    "node-qunit-puppeteer": {
+      "puppeteer": "22.11.2"
+    }
   }
 }

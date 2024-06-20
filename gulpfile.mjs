@@ -1,8 +1,6 @@
 import pkg from './package.json' with { type: "json" }
-import path from 'path'
 import { glob } from 'glob'
 import yargs from 'yargs';
-import colors from 'colors'
 import through from 'through2';
 import qunit from 'node-qunit-puppeteer'
 
@@ -11,10 +9,8 @@ import terser from '@rollup/plugin-terser'
 import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
-import sass from 'sass'
-
+import * as sass from 'sass'
 import gulp from 'gulp'
-import tap from 'gulp-tap'
 import zip from 'gulp-zip'
 import header from 'gulp-header'
 import eslint from 'gulp-eslint'
