@@ -42,16 +42,16 @@
     "babel-plugin-transform-html-import-to-string": "^2",
     "core-js": "^3",
     "fitty": "^2",
-    "glob": "^10",
+    "glob": "^11.0.0",
     "gulp": "^5",
     "gulp-autoprefixer": "^9",
     "gulp-clean-css": "^4",
     "gulp-connect": "^5",
     "gulp-eslint": "^6",
     "gulp-header": "^2",
-    "gulp-zip": "^5",
+    "gulp-zip": "^6.0.0",
     "highlight.js": "^11",
-    "marked": "^13",
+    "marked": "^14.0.0",
     "node-qunit-puppeteer": "^2",
     "qunit": "^2",
     "rollup": "^4",
@@ -99,7 +99,7 @@
   },
   "overrides": {
     "node-qunit-puppeteer": {
-      "puppeteer": "22.15.0"
+      "puppeteer": "23.1.0"
     },
     "lodash.template": {
       "lodash": "4.17.21"
