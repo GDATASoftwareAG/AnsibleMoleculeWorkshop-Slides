@@ -1,6 +1,6 @@
 {
   "name": "reveal.js",
-  "version": "4.3.2",
+  "version": "4.3.3",
   "description": "The HTML Presentation Framework",
   "homepage": "https://revealjs.com",
   "subdomain": "revealjs",
@@ -99,13 +99,13 @@
   },
   "overrides": {
     "node-qunit-puppeteer": {
-      "puppeteer": "23.1.0"
+      "puppeteer": "23.11.1"
     },
     "lodash.template": {
       "lodash": "4.17.21"
     },
     "gulp-eslint": {
-      "eslint": "9.9.0"
+      "eslint": "9.18.0"
     }
   }
 }
