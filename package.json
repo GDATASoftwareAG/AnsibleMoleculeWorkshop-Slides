@@ -1,6 +1,6 @@
 {
   "name": "reveal.js",
-  "version": "4.3.5",
+  "version": "4.3.6",
   "description": "The HTML Presentation Framework",
   "homepage": "https://revealjs.com",
   "subdomain": "revealjs",
@@ -56,7 +56,7 @@
     "qunit": "^2",
     "rollup": "^4",
     "sass": "^1",
-    "yargs": "^17"
+    "yargs": "^18.0.0"
   },
   "browserslist": "> 0.5%, IE 11, not dead",
   "eslintConfig": {
